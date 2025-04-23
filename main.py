@@ -7,18 +7,18 @@ def get_frequent_itemsets(df, min_sup):
     support = {}
     baskets = []
 
-    # Step 0: Convert each row into a set of items
-    for _, row in df.iterrows():
+    # Convert each row into a set of items
+    for _, basket in df.iterrows():
         transaction = set()
         for col in df.columns:
-            value = row[col]
+            value = baskets[col]
             if pd.notna(value):
                 transaction.add(f"{col}={str(value)}")
         baskets.append(transaction)
 
     num_baskets = len(baskets)
 
-    # Step 1: Count 1-itemsets
+    # Count First pass, large 1-itemsets (2.1 Algorithm Apriori)
     item_counts = {}
     for basket in baskets:
         for item in basket:
