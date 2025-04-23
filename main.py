@@ -11,58 +11,67 @@ def get_frequent_itemsets(df, min_sup):
     for _, basket in df.iterrows():
         transaction = set()
         for col in df.columns:
-            value = baskets[col]
+            value = basket[col]
             if pd.notna(value):
                 transaction.add(f"{col}={str(value)}")
         baskets.append(transaction)
 
     num_baskets = len(baskets)
 
-    # Count First pass, large 1-itemsets (2.1 Algorithm Apriori)
+    # First pass, find large 1-itemsets (2.1 Algorithm Apriori) k = 1 
     item_counts = {}
     for basket in baskets:
         for item in basket:
-            item_counts[item] = item_counts.get(item, 0) + 1
-
-    Lk = []
+            if item in item_counts:
+                item_counts[item] +=1
+            else:
+                item_counts[item] = 1
+    
+    L1 = []
     for item, count in item_counts.items():
         supp = count / num_baskets
-        if supp >= min_sup:
+        if supp >= min_sup: # check threshold
             itemset = tuple([item])
-            Lk.append(itemset)
-            support[itemset] = supp
-
-    itemsets.extend(Lk)
+            L1.append((item,))
+            support[(item,)] = supp
+    itemsets.extend(L1)
+    
+    # k ≥ 2 
+    # join and prune
+    
     k=2 
+    prev = L1
 
-    while Lk:
+    while prev:
+        # Step 2.1: Join step — generate candidate k-itemsets
         candidates = []
-        Lk_sorted = sorted(Lk)
-        for i in range(len(Lk_sorted)):
-            for j in range(i + 1, len(Lk_sorted)):
-                a, b = Lk_sorted[i], Lk_sorted[j]
+        for i in range(len(prev)):
+            for j in range(i + 1, len(prev)):
+                a, b = prev[i], prev[j]
                 if a[:k-2] == b[:k-2]:  # Join only if first k-2 items match
                     candidate = tuple(sorted(set(a) | set(b)))
-                    if len(candidate) == k:
+                    if candidate not in candidates:
                         candidates.append(candidate)
-
-        Lk_set = set(Lk)
-        pruned_candidates = []
+        
+        # Step 2.2: Prune step — remove if any (k-1) subset is not frequent
+        prev_set = set(prev)
+        pruned = []
         for candidate in candidates:
             all_subsets_frequent = all(
-                tuple(sorted(subset)) in Lk_set
-                for subset in itertools.combinations(candidate, k - 1)
+                tuple(sorted(subset)) in prev_set
+                for subset in combinations(candidate, k - 1)
             )
             if all_subsets_frequent:
-                pruned_candidates.append(candidate)
+                pruned.append(candidate)
+
         # Step 2.3: Count support for each candidate
-        candidate_counts = {c: 0 for c in pruned_candidates}
+        candidate_counts = {c: 0 for c in pruned}
         for basket in baskets:
-            for candidate in pruned_candidates:
+            for candidate in pruned:
                 if set(candidate).issubset(basket):
                     candidate_counts[candidate] += 1
 
-    # Step 2.4: Keep only those with enough support → Lk
+    # Step 2.4: Keep only those with enough support
         Lk = []
         for candidate, count in candidate_counts.items():
             supp = count / num_baskets
@@ -95,18 +104,20 @@ if __name__ == "__main__":
 
     filename = sys.argv[1]
     min_sup = float(sys.argv[2])
+    min_sup_percent = min_sup * 100
     min_conf = float(sys.argv[3])
+    min_conf_percent = min_conf*100
 
     df = pd.read_csv(filename)
     freq_itemsets = get_frequent_itemsets(df, min_sup)
     rules = get_association_rules(freq_itemsets, min_conf)
 
     with open("output.txt", "w") as f:
-        f.write(f"==Frequent itemsets (min_sup={min_sup*100:.0f}%)\n")
+        f.write(f"==Frequent itemsets (min_sup={min_sup_percent}%)\n")
         for itemset, sup in sorted(freq_itemsets.items(), key=lambda x: -x[1]):
             f.write(f"[{','.join(sorted(itemset))}], {sup*100:.4f}%\n")
 
-        f.write(f"\n==High-confidence association rules (min_conf={min_conf*100:.0f}%)\n")
+        f.write(f"\n==High-confidence association rules (min_conf={min_conf_percent}%)\n")
         for left, right, conf, sup in sorted(rules, key=lambda x: -x[2]):
             f.write(f"[{','.join(sorted(left))}] => [{','.join(sorted(right))}] (Conf: {conf*100:.1f}%, Supp: {sup*100:.4f}%)\n")
 
