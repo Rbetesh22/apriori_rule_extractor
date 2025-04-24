@@ -89,17 +89,21 @@ def get_frequent_itemsets(df, min_sup):
 
 def get_association_rules(support_dict, min_conf):
     rules = []
-    for itemset in support_dict.keys():
+    for itemset in support_dict:
+        itemset = frozenset(itemset)
         if len(itemset) < 2:
             continue
         for i in range(1, len(itemset)):
             for left in combinations(itemset, i):
-                left = tuple(sorted(left))
-                right = tuple(sorted(set(itemset) - set(left)))
+                left = frozenset(left)
+                right = itemset - left
+                if left not in support_dict:
+                    continue
                 conf = support_dict[itemset] / support_dict[left]
                 if conf >= min_conf:
                     rules.append((left, right, conf, support_dict[itemset]))
     return rules
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
