@@ -1,7 +1,6 @@
 import sys
 import pandas as pd
 from itertools import combinations
-# from mlxtend.frequent_patterns import apriori, association_rules
 
 def get_frequent_itemsets(df, min_sup):
     itemsets = []
@@ -19,7 +18,7 @@ def get_frequent_itemsets(df, min_sup):
 
     num_baskets = len(baskets)
 
-    # First pass, find large 1-itemsets (2.1 Algorithm Apriori) k = 1 
+    # First pass, find large 1-itemsets (Section 2.1 Algorithm Apriori) k = 1 
     item_counts = {}
     for basket in baskets:
         for item in basket:
@@ -44,42 +43,46 @@ def get_frequent_itemsets(df, min_sup):
     prev = L1
 
     while prev:
-        # Step 2.1: Join step — generate candidate k-itemsets
+        # Join step — generate candidate k-itemsets (Section 2.1.1 Algorithm Apriori)
         candidates = []
         for i in range(len(prev)):
             for j in range(i + 1, len(prev)):
                 a, b = prev[i], prev[j]
-                if a[:k-2] == b[:k-2]:  # Join only if first k-2 items match
-                    candidate = tuple(sorted(set(a) | set(b)))
+                if a[:k-2] == b[:k-2]:  # Join only if first k-2 items match 
+                    candidate = tuple(sorted(set(a) | set(b))) #create candidates for relations
                     if candidate not in candidates:
                         candidates.append(candidate)
         
-        # Step 2.2: Prune step — remove if any (k-1) subset is not frequent
+        # Prune step — Loop through candidates and remove if any (k-1) subset is not frequent
         prev_set = set(prev)
         pruned = []
         for candidate in candidates:
-            all_subsets_frequent = all(
-                tuple(sorted(subset)) in prev_set
-                for subset in combinations(candidate, k - 1)
-            )
-            if all_subsets_frequent:
+            all_valid = True
+            subsets = combinations(candidate, k-1) #generate combinations 
+            for subset in subsets:
+                sort = tuple(sorted(subset))
+                if sort not in prev_set:
+                    all_valid = False
+                    break
+
+            if all_valid:
                 pruned.append(candidate)
 
-        # Step 2.3: Count support for each candidate
+        # Count support for each candidate
         candidate_counts = {c: 0 for c in pruned}
         for basket in baskets:
             for candidate in pruned:
                 if set(candidate).issubset(basket):
                     candidate_counts[candidate] += 1
 
-    # Step 2.4: Keep only those with enough support
+    # Keep only those with enough support
         Lk = []
         for candidate, count in candidate_counts.items():
             supp = count / num_baskets
             if supp >= min_sup:
                 Lk.append(candidate)
                 support[candidate] = supp
-        # add a break if no more new freq itemsets 
+        
         if not Lk:
             break
         
@@ -128,5 +131,6 @@ if __name__ == "__main__":
 
         f.write(f"\n==High-confidence association rules (min_conf={min_conf_percent}%)\n")
         for left, right, conf, sup in sorted(rules, key=lambda x: -x[2]):
+            print(rules)
             f.write(f"[{','.join(sorted(left))}] => [{','.join(sorted(right))}] (Conf: {conf*100:.1f}%, Supp: {sup*100:.4f}%)\n")
 
