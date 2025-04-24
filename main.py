@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 from itertools import combinations
+# from mlxtend.frequent_patterns import apriori, association_rules
 
 def get_frequent_itemsets(df, min_sup):
     itemsets = []
@@ -78,23 +79,26 @@ def get_frequent_itemsets(df, min_sup):
             if supp >= min_sup:
                 Lk.append(candidate)
                 support[candidate] = supp
-
+        # add a break if no more new freq itemsets 
+        if not Lk:
+            break
+        
         itemsets.extend(Lk)
         k += 1
     return itemsets, support
 
-def get_association_rules(freq_itemsets, min_conf):
+def get_association_rules(support_dict, min_conf):
     rules = []
-    for itemset in freq_itemsets:
+    for itemset in support_dict.keys():
         if len(itemset) < 2:
             continue
         for i in range(1, len(itemset)):
             for left in combinations(itemset, i):
-                left = frozenset(left)
-                right = itemset - left
-                conf = freq_itemsets[itemset] / freq_itemsets[left]
+                left = tuple(sorted(left))
+                right = tuple(sorted(set(itemset) - set(left)))
+                conf = support_dict[itemset] / support_dict[left]
                 if conf >= min_conf:
-                    rules.append((left, right, conf, freq_itemsets[itemset]))
+                    rules.append((left, right, conf, support_dict[itemset]))
     return rules
 
 if __name__ == "__main__":
@@ -109,12 +113,13 @@ if __name__ == "__main__":
     min_conf_percent = min_conf*100
 
     df = pd.read_csv(filename)
-    freq_itemsets = get_frequent_itemsets(df, min_sup)
-    rules = get_association_rules(freq_itemsets, min_conf)
+    itemsets, support = get_frequent_itemsets(df, min_sup)
+    rules = get_association_rules(support, min_conf)
+
 
     with open("output.txt", "w") as f:
         f.write(f"==Frequent itemsets (min_sup={min_sup_percent}%)\n")
-        for itemset, sup in sorted(freq_itemsets.items(), key=lambda x: -x[1]):
+        for itemset, sup in sorted(support.items(), key=lambda x: -x[1]):
             f.write(f"[{','.join(sorted(itemset))}], {sup*100:.4f}%\n")
 
         f.write(f"\n==High-confidence association rules (min_conf={min_conf_percent}%)\n")
