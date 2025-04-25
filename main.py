@@ -98,13 +98,15 @@ def get_association_rules(support_dict, min_conf):
             continue
         for i in range(1, len(itemset)):
             for left in combinations(itemset, i):
-                left = frozenset(left)
-                right = itemset - left
-                if left not in support_dict:
+                left_frozen = frozenset(left)
+                right_frozen = itemset - left_frozen
+                left_tuple = tuple(sorted(left))
+                full_tuple = tuple(sorted(itemset))
+                if left_tuple not in support_dict:
                     continue
-                conf = support_dict[itemset] / support_dict[left]
+                conf = support_dict[full_tuple] / support_dict[left_tuple]
                 if conf >= min_conf:
-                    rules.append((left, right, conf, support_dict[itemset]))
+                    rules.append((full_tuple, tuple(sorted(right_frozen)), conf, support_dict[full_tuple]))
     return rules
 
 
@@ -131,6 +133,5 @@ if __name__ == "__main__":
 
         f.write(f"\n==High-confidence association rules (min_conf={min_conf_percent}%)\n")
         for left, right, conf, sup in sorted(rules, key=lambda x: -x[2]):
-            print(rules)
+            # print(rules)
             f.write(f"[{','.join(sorted(left))}] => [{','.join(sorted(right))}] (Conf: {conf*100:.1f}%, Supp: {sup*100:.4f}%)\n")
-
