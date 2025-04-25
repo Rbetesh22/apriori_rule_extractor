@@ -1,4 +1,4 @@
-==Frequent itemsets (min_sup=50.0%)
+==Frequent itemsets (min_sup=10.0%)
 [License Type=Premises], 99.8550%
 [license_state=NY], 99.8067%
 [License Type=Premises,license_state=NY], 99.6617%
@@ -14,27 +14,122 @@
 [complaint_address_type=ADDRESS,eviction_count=0], 51.4741%
 [eviction_count=0,license_state=NY], 51.4258%
 [License Status=Active], 51.2325%
-[License Status=Active,License Type=Premises], 51.1358%
 [License Status=Active,license_state=NY], 51.1358%
+[License Status=Active,License Type=Premises], 51.1358%
+[eviction_count=0,status=Closed], 46.1092%
+[license_city=NEW YORK], 39.1010%
+[License Type=Premises,license_city=NEW YORK], 39.1010%
+[License Status=Active,complaint_address_type=ADDRESS], 39.0043%
+[license_city=NEW YORK,license_state=NY], 38.9560%
+[complaint_address_type=ADDRESS,license_city=NEW YORK], 35.1377%
+[License Status=Active,status=Closed], 34.1228%
+[license_city=NEW YORK,status=Closed], 30.4495%
+[license_city=BROOKLYN], 28.5162%
+[license_city=BROOKLYN,license_state=NY], 28.5162%
+[License Type=Premises,license_city=BROOKLYN], 28.4679%
+[eviction_count=0,license_city=NEW YORK], 28.1295%
+[License Status=Active,eviction_count=0], 27.0179%
+[eviction_count=1], 26.0512%
+[eviction_count=1,license_state=NY], 26.0512%
+[License Type=Premises,eviction_count=1], 26.0029%
+[complaint_count=0], 24.6979%
+[complaint_count=0,license_state=NY], 24.6979%
+[License Type=Premises,complaint_count=0], 24.6013%
+[License Status=Expired], 24.4563%
+[License Status=Expired,license_state=NY], 24.4079%
+[License Status=Expired,License Type=Premises], 24.4079%
+[Business Category=Home Improvement Contractor], 24.2629%
+[Business Category=Home Improvement Contractor,license_state=NY], 24.2629%
+[Business Category=Home Improvement Contractor,License Type=Premises], 24.2629%
+[license_city=BRONX], 22.6680%
+[license_city=BRONX,license_state=NY], 22.6680%
+[License Type=Premises,license_city=BRONX], 22.5713%
+[License Status=Active,license_city=NEW YORK], 20.8797%
+[Business Category=Garage & Parking Lot], 20.8313%
+[Business Category=Garage & Parking Lot,License Type=Premises], 20.8313%
+[Business Category=Garage & Parking Lot,license_state=NY], 20.7347%
+[Business Category=Garage & Parking Lot,complaint_address_type=ADDRESS], 19.5747%
+[complaint_address_type=ADDRESS,license_city=BROOKLYN], 18.9464%
+[License Status=Expired,complaint_address_type=ADDRESS], 18.1730%
+[Business Category=Tobacco Retail Dealer], 18.1247%
+[Business Category=Tobacco Retail Dealer,license_state=NY], 18.1247%
+[Business Category=Tobacco Retail Dealer,License Type=Premises], 18.1247%
+[Business Category=Garage & Parking Lot,status=Closed], 17.4480%
+[license_city=BROOKLYN,status=Closed], 16.6264%
+[License Status=Expired,status=Closed], 16.1914%
+[complaint_count=3], 15.9981%
+[complaint_count=3,license_state=NY], 15.9981%
+[complaint_count=0,eviction_count=1], 15.9497%
+[License Type=Premises,complaint_count=3], 15.9497%
+[complaint_address_type=ADDRESS,complaint_count=3], 15.9497%
+[complaint_address_type=ADDRESS,license_city=BRONX], 14.8864%
+[Business Category=Tobacco Retail Dealer,complaint_address_type=ADDRESS], 14.8864%
+[complaint_count=3,status=Closed], 13.9681%
+[Business Category=Garage & Parking Lot,eviction_count=0], 13.8231%
+[complaint_count=3,eviction_count=0], 13.8231%
+[License Status=Active,license_city=BROOKLYN], 13.6298%
+[license_city=BRONX,status=Closed], 13.5814%
+[Business Category=Tobacco Retail Dealer,status=Closed], 13.3398%
+[License Status=Active,eviction_count=1], 13.1464%
+[Business Category=Garage & Parking Lot,License Status=Active], 13.1464%
+[Business Category=Home Improvement Contractor,License Status=Active], 12.9531%
+[Expiration Date=02/28/2027], 12.9048%
+[Expiration Date=02/28/2027,license_state=NY], 12.9048%
+[Business Category=Home Improvement Contractor,Expiration Date=02/28/2027], 12.9048%
+[Expiration Date=02/28/2027,License Type=Premises], 12.9048%
+[Expiration Date=02/28/2027,License Status=Active], 12.9048%
+[Business Category=Garage & Parking Lot,license_city=NEW YORK], 12.3248%
+[Expiration Date=03/31/2027], 12.2765%
+[Expiration Date=03/31/2027,License Type=Premises], 12.2765%
+[Business Category=Garage & Parking Lot,Expiration Date=03/31/2027], 12.2765%
+[Expiration Date=03/31/2027,license_state=NY], 12.2281%
+[Expiration Date=03/31/2027,License Status=Active], 12.2281%
+[Business Category=Home Improvement Contractor,complaint_address_type=ADDRESS], 12.1315%
+[Business Category=Home Improvement Contractor,complaint_count=0], 12.0348%
+[License Status=Active,complaint_count=0], 12.0348%
+[License Status=Expired,eviction_count=0], 12.0348%
+[Expiration Date=03/31/2027,complaint_address_type=ADDRESS], 11.6481%
+[eviction_count=0,license_city=BROOKLYN], 11.4065%
+[License Status=Active,license_city=BRONX], 11.2131%
+[Business Category=Home Improvement Contractor,status=Closed], 11.0681%
+[complaint_type=Illegal Parking], 10.9715%
+[complaint_type=Illegal Parking,license_state=NY], 10.9715%
+[License Type=Premises,complaint_type=Illegal Parking], 10.9715%
+[complaint_address_type=ADDRESS,complaint_type=Illegal Parking], 10.9715%
+[complaint_type=Illegal Parking,status=Closed], 10.9715%
+[Expiration Date=03/31/2027,status=Closed], 10.2948%
 
-==High-confidence association rules (min_conf=50.0%)
+==High-confidence association rules (min_conf=80.0%)
 [complaint_address_type=ADDRESS] => [License Type=Premises] (Conf: 99.9%, Supp: 75.0121%)
 [status=Closed] => [License Type=Premises] (Conf: 99.9%, Supp: 66.3606%)
 [license_state=NY] => [License Type=Premises] (Conf: 99.9%, Supp: 99.6617%)
+[license_city=BROOKLYN] => [License Type=Premises] (Conf: 99.8%, Supp: 28.4679%)
+[eviction_count=1] => [License Type=Premises] (Conf: 99.8%, Supp: 26.0029%)
 [eviction_count=0] => [complaint_address_type=ADDRESS] (Conf: 99.8%, Supp: 51.4741%)
-[License Status=Active] => [License Type=Premises] (Conf: 99.8%, Supp: 51.1358%)
 [License Status=Active] => [license_state=NY] (Conf: 99.8%, Supp: 51.1358%)
+[License Status=Active] => [License Type=Premises] (Conf: 99.8%, Supp: 51.1358%)
 [License Type=Premises] => [license_state=NY] (Conf: 99.8%, Supp: 99.6617%)
+[License Status=Expired] => [license_state=NY] (Conf: 99.8%, Supp: 24.4079%)
+[License Status=Expired] => [License Type=Premises] (Conf: 99.8%, Supp: 24.4079%)
 [complaint_address_type=ADDRESS] => [license_state=NY] (Conf: 99.7%, Supp: 74.8671%)
 [eviction_count=0] => [license_state=NY] (Conf: 99.7%, Supp: 51.4258%)
 [status=Closed] => [license_state=NY] (Conf: 99.7%, Supp: 66.2156%)
 [status=Closed] => [complaint_address_type=ADDRESS] (Conf: 99.7%, Supp: 66.2156%)
+[complaint_count=3] => [License Type=Premises] (Conf: 99.7%, Supp: 15.9497%)
+[complaint_count=3] => [complaint_address_type=ADDRESS] (Conf: 99.7%, Supp: 15.9497%)
+[license_city=NEW YORK] => [license_state=NY] (Conf: 99.6%, Supp: 38.9560%)
+[complaint_count=0] => [License Type=Premises] (Conf: 99.6%, Supp: 24.6013%)
+[Expiration Date=03/31/2027] => [license_state=NY] (Conf: 99.6%, Supp: 12.2281%)
+[Expiration Date=03/31/2027] => [License Status=Active] (Conf: 99.6%, Supp: 12.2281%)
+[license_city=BRONX] => [License Type=Premises] (Conf: 99.6%, Supp: 22.5713%)
+[Business Category=Garage & Parking Lot] => [license_state=NY] (Conf: 99.5%, Supp: 20.7347%)
+[Expiration Date=03/31/2027] => [complaint_address_type=ADDRESS] (Conf: 94.9%, Supp: 11.6481%)
+[Business Category=Garage & Parking Lot] => [complaint_address_type=ADDRESS] (Conf: 94.0%, Supp: 19.5747%)
+[license_city=NEW YORK] => [complaint_address_type=ADDRESS] (Conf: 89.9%, Supp: 35.1377%)
+[eviction_count=0] => [status=Closed] (Conf: 89.4%, Supp: 46.1092%)
 [complaint_address_type=ADDRESS] => [status=Closed] (Conf: 88.2%, Supp: 66.2156%)
-[License Type=Premises] => [complaint_address_type=ADDRESS] (Conf: 75.1%, Supp: 75.0121%)
-[license_state=NY] => [complaint_address_type=ADDRESS] (Conf: 75.0%, Supp: 74.8671%)
-[complaint_address_type=ADDRESS] => [eviction_count=0] (Conf: 68.6%, Supp: 51.4741%)
-[License Type=Premises] => [status=Closed] (Conf: 66.5%, Supp: 66.3606%)
-[license_state=NY] => [status=Closed] (Conf: 66.3%, Supp: 66.2156%)
-[license_state=NY] => [eviction_count=0] (Conf: 51.5%, Supp: 51.4258%)
-[license_state=NY] => [License Status=Active] (Conf: 51.2%, Supp: 51.1358%)
-[License Type=Premises] => [License Status=Active] (Conf: 51.2%, Supp: 51.1358%)
+[complaint_count=3] => [status=Closed] (Conf: 87.3%, Supp: 13.9681%)
+[complaint_count=3] => [eviction_count=0] (Conf: 86.4%, Supp: 13.8231%)
+[Expiration Date=03/31/2027] => [status=Closed] (Conf: 83.9%, Supp: 10.2948%)
+[Business Category=Garage & Parking Lot] => [status=Closed] (Conf: 83.8%, Supp: 17.4480%)
+[Business Category=Tobacco Retail Dealer] => [complaint_address_type=ADDRESS] (Conf: 82.1%, Supp: 14.8864%)
