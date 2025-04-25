@@ -93,21 +93,34 @@ def get_frequent_itemsets(df, min_sup):
 
 def get_association_rules(support_dict, min_conf):
     rules = []
+    # loops through all of the frequent itemsets from earlier
     for itemset in support_dict:
         itemset = frozenset(itemset)
         if len(itemset) < 2:
-            continue
+            continue  # Makes sure there is a minimum of 2 items - to make rule
+        full_tuple = tuple(sorted(itemset)) #sort to match dict keys
+        full_support = support_dict.get(full_tuple)
+        # try splitting into each possible left/right combo
         for i in range(1, len(itemset)):
             for left in combinations(itemset, i):
                 left_frozen = frozenset(left)
                 right_frozen = itemset - left_frozen
                 left_tuple = tuple(sorted(left))
-                full_tuple = tuple(sorted(itemset))
-                if left_tuple not in support_dict:
+                right_tuple = tuple(sorted(right_frozen))
+                # skip empties
+                if len(left_frozen) == 0 or len(right_frozen) == 0:
                     continue
-                conf = support_dict[full_tuple] / support_dict[left_tuple]
+                #skip uninteresting rules (where support didn't change)
+                if support_dict.get(left_tuple) == full_support or support_dict.get(right_tuple) == full_support:
+                    continue
+
+                if left_tuple not in support_dict:
+                    continue  #should not happen but just in case
+                # calculate confidence
+                conf = full_support / support_dict[left_tuple]
+                # if conf is high enough, add to rule set
                 if conf >= min_conf:
-                    rules.append((full_tuple, tuple(sorted(right_frozen)), conf, support_dict[full_tuple]))
+                    rules.append((left_tuple, right_tuple, conf, full_support))
     return rules
 
 
