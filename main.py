@@ -47,9 +47,10 @@ def get_frequent_itemsets(df, min_sup):
         candidates = []
         for i in range(len(prev)):
             for j in range(i + 1, len(prev)):
-                a, b = prev[i], prev[j]
-                if a[:k-2] == b[:k-2]:  # Join only if first k-2 items match 
-                    candidate = tuple(sorted(set(a) | set(b))) #create candidates for relations
+                a = prev[i]
+                b = prev[j]
+                if a[:k-2] == b[:k-2]:  # join only if first k-2 items match 
+                    candidate = tuple(sorted(set(a) | set(b))) # Create candidates for relations
                     if candidate not in candidates:
                         candidates.append(candidate)
         
@@ -58,7 +59,7 @@ def get_frequent_itemsets(df, min_sup):
         pruned = []
         for candidate in candidates:
             all_valid = True
-            subsets = combinations(candidate, k-1) #generate combinations 
+            subsets = combinations(candidate, k-1) # Generate combinations 
             for subset in subsets:
                 sort = tuple(sorted(subset))
                 if sort not in prev_set:
@@ -75,7 +76,7 @@ def get_frequent_itemsets(df, min_sup):
                 if set(candidate).issubset(basket):
                     candidate_counts[candidate] += 1
 
-    # Keep only those with enough support
+    # Keep only those with high enough support
         Lk = []
         for candidate, count in candidate_counts.items():
             supp = count / num_baskets
@@ -112,7 +113,7 @@ def get_association_rules(support_dict, min_conf):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Necessary arguments, min_sup and min_conf are missing.")
+        print("Necessary arguments, dataset, minimum support and/or minimum confidence are missing.")
         sys.exit(1)
 
     filename = sys.argv[1]
@@ -133,5 +134,4 @@ if __name__ == "__main__":
 
         f.write(f"\n==High-confidence association rules (min_conf={min_conf_percent}%)\n")
         for left, right, conf, sup in sorted(rules, key=lambda x: -x[2]):
-            # print(rules)
             f.write(f"[{','.join(sorted(left))}] => [{','.join(sorted(right))}] (Conf: {conf*100:.1f}%, Supp: {sup*100:.4f}%)\n")
