@@ -129,17 +129,23 @@ if __name__ == "__main__":
         print("Necessary arguments, dataset, minimum support and/or minimum confidence are missing.")
         sys.exit(1)
 
+    # get arguments and check if valid 
+    if float(sys.argv[2]) > 1 or float(sys.argv[2]) < 0 or float(sys.argv[3]) > 1 or float(sys.argv[3]) < 0:
+        print("Minumum support and confidence must be between 0 and 1.")
+        sys.exit(1)
+        
+    #if arguments are valid:
     filename = sys.argv[1]
     min_sup = float(sys.argv[2])
     min_sup_percent = min_sup * 100
     min_conf = float(sys.argv[3])
     min_conf_percent = min_conf*100
 
-    df = pd.read_csv(filename)
+    df = pd.read_csv(filename)  # convert csv to pandas dataframe 
     itemsets, support = get_frequent_itemsets(df, min_sup)
     rules = get_association_rules(support, min_conf)
 
-
+    # write to output file
     with open("output.txt", "w") as f:
         f.write(f"==Frequent itemsets (min_sup={min_sup_percent}%)\n")
         for itemset, sup in sorted(support.items(), key=lambda x: -x[1]):
