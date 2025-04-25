@@ -5,7 +5,22 @@ b.  INTEGRATED-DATASET.csv
     example-run.txt
     README.txt
 
-c. to do 
+c. Use the standard VM config unless additional memory is needed. No extra memory is required.
+
+    Make sure you are in the project folder
+    - cd proj3
+
+    Install venv
+    - sudo apt update
+    - sudo apt install python3-venv -y
+    - python3 -m venv venv
+
+    Set up venv
+    - source venv/bin/activate
+    - pip install pandas flask
+
+    Run Program
+    - python3 main.py INTEGRATED-DATASET.csv 0.1 0.8
 
 d. We used the datasets: 311 Service Requests from 2019 to Present, Evictions, and Issued Licenses. We downloaded them using the following steps:
 
@@ -63,8 +78,5 @@ proper itemsets. We did not implement the subset function described in Section 2
 the frequent itemsets and calculates the confidence for each. If the confidence is high enough, that pair is saved as a high-confidence association rule.
 
 
-f. python main.py INTEGRATED-DATASET.csv SUP CONF
-- explain why compelling 
-
-
-g. To do
+f. python main.py INTEGRATED-DATASET.csv 0.1 0.8 
+-- We chose these parameters because the primary goal of our project is to uncover meaningful patterns that could indicate increased risk of evictions or foreclosures amongst New York City retail stores, with relation to lots of variables and high confidence. This is the first step in our goal to observe trends, correlations, and combinations of attributes that frequently co-occur in commercial addresses where evictions or complaint activity is present—and potentially help these businesses save themselves before it's too late.
