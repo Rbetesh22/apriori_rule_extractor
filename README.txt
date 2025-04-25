@@ -1,8 +1,11 @@
 a. Kira Ariyan (kna2121) Ralph Betesh (rb3557)
 
-b. INTEGRATED-DATASET.csv, main.py 
+b.  INTEGRATED-DATASET.csv
+    main.py 
+    example-run.txt
+    README.txt
 
-c. To do
+c. to do 
 
 d. We used the datasets: 311 Service Requests from 2019 to Present, Evictions, and Issued Licenses. We downloaded them using the following steps:
 
@@ -50,8 +53,18 @@ Step 5: Export to CSV
 \copy (SELECT * FROM integrated_dataset) TO 'INTEGRATED-DATASET.csv' CSV HEADER;
 
 
-e. To do
+e. The internal design of main.py is as follows - the program expects 4 command line arguments, (main.py, the dataset csv, the minimum support and minumum confidence).
+If the program does not receive these arguments it exits immediately. If it properly retrieves the arguments, the program then calls 2 functions, get_frequent_itemsets and
+get_association_rules. get_frequent_itemsets takes in a pandas dataframe generated using the csv file and performs the apriori algorithm as described in
+Section 2.1 of Agrawal's paper "Fast Algorithms for Mining Association Rules. First it finds the large 1-itemsets by counting item occurences.
+Then the itemsets are used to generate candidate pairings for possible association rules. We use the algorithm described in 2.1.1 for candidate generation.
+We joined and pruned potential candidates to generate a list, and then ensure that each of these candidates have the minumum support. Finally, the function extends the 
+proper itemsets. We did not implement the subset function described in Section 2.1.2 or the possible variations. The next function, get_association_rules checks possible combinations from 
+the frequent itemsets and calculates the confidence for each. If the confidence is high enough, that pair is saved as a high-confidence association rule.
 
-f. To do
+
+f. python main.py INTEGRATED-DATASET.csv SUP CONF
+- explain why compelling 
+
 
 g. To do
