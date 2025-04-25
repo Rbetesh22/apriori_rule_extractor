@@ -5,7 +5,7 @@ b.  INTEGRATED-DATASET.csv
     example-run.txt
     README.txt
 
-c. Use the standard VM config unless additional memory is needed. No extra memory is required.
+c. Use the standard VM config - we required no extra memory.
 
     Make sure you are in the project folder
     - cd proj3
@@ -19,7 +19,7 @@ c. Use the standard VM config unless additional memory is needed. No extra memor
     - source venv/bin/activate
     - pip install pandas flask
 
-    Run Program
+    Run Program - ensure that the csv is in the proper directory
     - python3 main.py INTEGRATED-DATASET.csv 0.1 0.8
 
 d. We used the datasets: 311 Service Requests from 2019 to Present, Evictions, and Issued Licenses. We downloaded them using the following steps:
@@ -79,4 +79,9 @@ the frequent itemsets and calculates the confidence for each. If the confidence 
 
 
 f. python main.py INTEGRATED-DATASET.csv 0.1 0.8 
--- We chose these parameters because the primary goal of our project is to uncover meaningful patterns that could indicate increased risk of evictions or foreclosures amongst New York City retail stores, with relation to lots of variables and high confidence. This is the first step in our goal to observe trends, correlations, and combinations of attributes that frequently co-occur in commercial addresses where evictions or complaint activity is present—and potentially help these businesses save themselves before it's too late.
+We chose these parameters because the primary goal of our project is to uncover meaningful patterns that could indicate increased risk of evictions or 
+foreclosures amongst New York City retail stores, with relation to lots of variables and high confidence. This is the first step in our goal to observe trends, 
+correlations, and combinations of attributes that frequently co-occur in commercial addresses where evictions or complaint activity is present and potentially 
+help these businesses save themselves before it's too late. These association rules give us insight into patterns between service complaints and eviction statuses.
+Some businesses being evicted have registered licenses and complaints in the past which have been left unresolved. Most businesses in NY are very well documented and licensed,
+which leads us to look deeper into evictions and unresolved 311 requests/complaints.
